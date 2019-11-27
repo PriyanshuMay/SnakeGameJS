@@ -30,8 +30,8 @@
         ];
 
         function randomizeApple() {
-            apple.x = 9 * Math.random() | 0;
-            apple.y = 9 * Math.random() | 0;
+            apple.x = 10 * Math.random() | 0;
+            apple.y = 10 * Math.random() | 0;
         }
 
         function moveSnake(delta) {
@@ -72,7 +72,7 @@
                 context.lineTo(pos.x * size, pos.y * size);
             }
 
-            context.lineWidth = 10;
+            context.lineWidth = 16;
             context.strokeStyle = 'green';
             context.stroke();
         }

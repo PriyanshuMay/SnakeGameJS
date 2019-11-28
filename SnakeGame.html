@@ -4,18 +4,19 @@
   <title></title>
   <style>
   html, body {
-    height: 100%;
-    margin: 0;
+    height: 90%;
+    margin: 2%;
   }
   body {
     background: black;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
   }
   canvas {
-     background: white;
-    border: 1px solid white;
+
+    background: white;
+  
   }
   </style>
 </head>
@@ -83,10 +84,10 @@ function loop() {
     snake.cells.pop();
   }
   // draw apple
-  context.fillStyle = 'red';
+  context.fillStyle = 'black';
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
   // draw snake one cell at a time
-  context.fillStyle = 'green';
+  context.fillStyle = 'black';
   snake.cells.forEach(function(cell, index) {
     
     // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
@@ -115,25 +116,44 @@ function loop() {
     }
   });
 }
+
+function moveup(){
+    snake.dx = -grid;
+    snake.dy = 0;
+  }
+
+function movedown() {
+    myGamePiece.speedY = 1; 
+}
+
+function moveleft() {
+    myGamePiece.speedX = -1; 
+}
+
+function moveright() {
+    myGamePiece.speedX = 1; 
+}
+
+
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
   
-  if (e.which === 37 && snake.dx === 0) {
+  if (e.which === 37 || e.which === 65 && snake.dx === 0) {
     snake.dx = -grid;
     snake.dy = 0;
   }
   // up arrow key
-  else if (e.which === 38 && snake.dy === 0) {
+  else if (e.which === 38 || e.which === 87 && snake.dy === 0) {
     snake.dy = -grid;
     snake.dx = 0;
   }
   // right arrow key
-  else if (e.which === 39 && snake.dx === 0) {
+  else if (e.which === 39 || e.which === 68 && snake.dx === 0) {
     snake.dx = grid;
     snake.dy = 0;
   }
   // down arrow key
-  else if (e.which === 40 && snake.dy === 0) {
+  else if (e.which === 40 || e.which === 83 && snake.dy === 0) {
     snake.dy = grid;
     snake.dx = 0;
   }
@@ -141,5 +161,14 @@ document.addEventListener('keydown', function(e) {
 // start the game
 requestAnimationFrame(loop);
 </script>
+
+<div style="text-align:right;width:480px;">
+
+  <button onmousedown="moveup()"     ontouchstart="moveup()">^</button><br><br>
+  <button onmousedown="moveleft()"   ontouchstart="moveleft()"><</button>
+  <button onmousedown="movedown()"   ontouchstart="movedown()">_</button>
+  <button onmousedown="moveright()"  ontouchstart="moveright()">></button><br><br>
+</div>
+
 </body>
 </html>

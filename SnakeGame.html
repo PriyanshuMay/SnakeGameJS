@@ -25,7 +25,7 @@
   </style>
 </head>
 <body>
-<canvas width="400" height="400" id="game"></canvas>
+<canvas width="400" height="400" id="game" style=" position: absolute; left:20%; top:10%;"></canvas>
 <script>
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
@@ -97,10 +97,11 @@ function loop() {
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
 
   bro = context.createLinearGradient(0,0,400,400);
-  bro.addColorStop(0,"cyan");
-  bro.addColorStop(0.25,"lightgreen");
-  bro.addColorStop(0.50,"blue");
-  bro.addColorStop(0.75,"red");
+  bro.addColorStop(0,"green");
+  bro.addColorStop(0.2,"yellow");
+  bro.addColorStop(0.4,"magenta");
+  bro.addColorStop(0.6,"blue");
+  bro.addColorStop(0.8,"red");
   bro.addColorStop(1,"pink");
   context.fillStyle = bro;
   snake.cells.forEach(function(cell, index)
@@ -115,13 +116,14 @@ function loop() {
       apple.x = getRandomInt(0, 25) * grid;
       apple.y = getRandomInt(0, 25) * grid;
     }
-    // Check collision with all cells after this one (modified bubble sort)
-    for (var i = index + 1; i < snake.cells.length; i++) {
-      
-      // Snake occupies same space as a body part. reset game
+    for (var i = index + 1; i < snake.cells.length; i++)//bubble sort algorithm
+     {      
+      // Snake occupies same space as a body part = reset game
       if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-        alert("  GAME OVER     Your Score is  "+ myScore);    // Alert msg during end of the game
         myScore=0;
+      context.font='bold 30px courier';
+      context.fillStyle = 'black';
+      context.fillText('GAMEOVER',170,170);  // Display gameover
         snake.x = 160;
         snake.y = 160;
         snake.cells = [];
@@ -182,7 +184,7 @@ function moveright() {
 // start the game
 requestAnimationFrame(loop);
 </script>
-<div style="text-align:center;width:480px;">
+<div style="position: absolute; left:70%; top:40%;">
 <button  onmousedown="moveup()"     class="button" id="up"    ontouchstart="moveup()">UP</button><br><br>
 <button onmousedown="moveleft()"   class="button" id="left"  ontouchstart="moveleft()">LEFT</button>
 <button onmousedown="movedown()"   class="button" id="down"  ontouchstart="movedown()">DOWN</button>

@@ -4,25 +4,33 @@
   <title></title>
   <style>
   body {
-    background: linear-gradient(to bottom,lightgreen,cyan);
+    background:white;
   }
   canvas {
-    background: white;
+    background: linear-gradient(to bottom,lightgreen,cyan);
     }
-    .button {
-  background-color:black;
-  border:white;
-  border-width: 2px;
-  color: white;
-  padding: 15px 32px;
+ .button2 {
+  background: linear-gradient(to bottom,lightgreen,cyan);
+  color: Magenta;
+  padding: 15px 15px;
   text-align: center;
-  display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  margin: 4px 2px;
   border-radius: 18px;
 }
-  </style>
+  .button {
+  background: linear-gradient(to bottom,lightgreen,cyan);
+  color: Magenta;
+  padding: 15px 25px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 18px;
+}
+.button:hover{
+  background: linear-gradient(to bottom,red,white);
+ }
+</style>
 </head>
 <body>
 <canvas width="400" height="400" id="game" style=" position: absolute; left:20%; top:10%;"></canvas>
@@ -123,7 +131,8 @@ function loop() {
         myScore=0;
       context.font='bold 30px courier';
       context.fillStyle = 'black';
-      context.fillText('GAMEOVER',170,170);  // Display gameover
+      context.fillText('GAMEOVER',170,170);
+      context.fillText(myScore,170,270);  // Display gameover
         snake.x = 160;
         snake.y = 160;
         snake.cells = [];
@@ -184,11 +193,11 @@ function moveright() {
 // start the game
 requestAnimationFrame(loop);
 </script>
-<div style="position: absolute; left:70%; top:40%;">
-<button  onmousedown="moveup()"     class="button" id="up"    ontouchstart="moveup()">UP</button><br><br>
-<button onmousedown="moveleft()"   class="button" id="left"  ontouchstart="moveleft()">LEFT</button>
-<button onmousedown="movedown()"   class="button" id="down"  ontouchstart="movedown()">DOWN</button>
-<button onmousedown="moveright()"  class="button" id="right" ontouchstart="moveright()">RIGHT</button>
+<div >
+<button style=" position: absolute; left:72%; top:30%;" onmousedown="moveup()"     class="button2" id="up"    ontouchstart="moveup()">UP</button><br><br>
+<button style=" position: absolute; left:60%; top:40%;"onmousedown="moveleft()"   class="button" id="left"  ontouchstart="moveleft()">LEFT</button>
+<button style=" position: absolute; left:70%; top:40%;"onmousedown="movedown()"   class="button" id="down"  ontouchstart="movedown()">DOWN</button>
+<button style=" position: absolute; left:80%; top:40%;"onmousedown="moveright()"  class="button" id="right" ontouchstart="moveright()">RIGHT</button>
 </div>
 </body>
 </html>

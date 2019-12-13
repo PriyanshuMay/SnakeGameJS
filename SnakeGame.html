@@ -1,113 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Snake Game</title>
   <style>
+
 body {
 background:transparent;
 display: flex;
 align-items: center;
 justify-content: center;
   }
+
 canvas {
 background: linear-gradient(to bottom,lightgreen,cyan);
     }
+
 .button2 {
-background: linear-gradient(to bottom,lightgreen,cyan);
-color: Magenta;
-padding: 25px 25px;
-text-align: center;
-font-size: 20px;
-font-weight: bold;
-border-radius: 70%;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        margin-left: -50px;
+        margin-top: -50px;
+        display: block;
+        font-size: 1.3em;
+        width: 100px;
+        height: 100px;
+        font-weight: light;
+        font-family: 'Trebuchet MS', sans-serif;
+        text-align: center;
+        line-height: 100px;
+        color: white;
+        border: none;
+        border-radius: 60%; 
+        cursor: pointer;
+        transition: width 0.9s, height 0.9s ;
+        background: linear-gradient(to bottom,lightgreen,cyan);
 }
+
 .button2:hover{
 background: linear-gradient(to bottom,red,pink);
+width: 105px;
+        height:105px;
  }
+
 .button {
-background:linear-gradient(to bottom,lightgreen,cyan);
-color: Magenta;
-padding: 25px 25px;
-text-align: center;
-font-size: 20px;
-font-weight: bold;
-border-radius: 70%;
+ position: relative;
+        top: 50%;
+        left: 50%;
+        margin-left: -50px;
+        margin-top: -50px;
+        display: block;
+        font-size: 1.3em;
+        width: 100px;
+        height: 100px;
+        font-weight: light;
+        font-family: 'Trebuchet MS', sans-serif;
+        text-align: center;
+        line-height: 100px;
+        color: white;
+        border: none;
+        border-radius: 60%; 
+        cursor: pointer;
+        transition: width 0.9s, height 0.9s ;
+        background: linear-gradient(to bottom,lightgreen,cyan);
 }
+
 .button:hover{
 background:linear-gradient(to bottom,red,pink);
+width: 105px;
+        height:105px;
  }
+
+#scoreboard{
+  background:transparent;
+  border: none;
+        border-radius: 60%; 
+        cursor: pointer;
+        transition: width 0.9s, height 0.9s ;
+}
 </style>
 </head>
 <body>
 <canvas width="400" height="400" id="game" style=" position: absolute; left:20%; top:10%;"></canvas>
+<canvas width="100" height="100" id="scoreboard" style=" position: absolute; left:8%; top:10%;"></canvas>
 <script>
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
+var scorecanvas = document.getElementById('scoreboard');
+var scorecontext = scorecanvas.getContext('2d');
 var grid = 16;
 var count = 0;
 var myScore=0; 
 var snake = {
-  x: 160,
-  y: 160,
-  
-  // snake velocity,moves one grid length every frame in either the x or y direction
-  dx: grid,
-  dy: 0,
-  
-  // Keep track of all grids the snake body occupies
-  cells: [],
-  
-  // Length of the snake. grows when eating an apple
+  x: 160,       // snake's x co-ordinate
+  y: 160,       // snake's y co-ordinate
+  dx: grid,     // snake's horizontal velocity
+  dy: 0,        // snake's vertical velocity
+  cells: [],    // Body of snake
   maxCells: 4
 };
 var apple = {
-  x: 320,
-  y: 320
+  x: 320,       //apple's x co-ordinate
+  y: 320        //apple's y co-ordinate
 };
-// Get random whole numbers in a specific range
+// Get random numbers
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 // Game loop
 function loop() {
   requestAnimationFrame(loop);
-  // Slow game loop to 10 fps instead of 60 (60/10 = 6)
   if (++count < 6) {
     return;
   }
   count = 0;  
   context.clearRect(0,0,canvas.width,canvas.height);
-
-  // Move snake by it's velocity
-  snake.x += snake.dx;
+  snake.x += snake.dx;     //move snake by it's velocity 
   snake.y += snake.dy;
 
-  if (snake.x < 0) {
+  if (snake.x < 0) {       //if snkae goes out of frame from left side
     snake.x = canvas.width - grid;
   }
-  else if (snake.x >= canvas.width) {
+  else if (snake.x >= canvas.width) {     //if snkae goes out of frame from right side
     snake.x = 0;     
   }
-  if (snake.y < 0) {
+  if (snake.y < 0) {         //if snkae goes out of frame from the top
     snake.y = canvas.height - grid;
   }
-  else if (snake.y >= canvas.height) {
+  else if (snake.y >= canvas.height) {     //if snkae goes out of frame from the bottom
     snake.y = 0; 
   }
-
+// to update the body of the snake from the beginning using unshift
   snake.cells.unshift({x: snake.x, y: snake.y});
+// to update the body of the snake from the end using pop funtion 
   if (snake.cells.length > snake.maxCells) {
     snake.cells.pop();            
   }
-   
-  // Draw apple
-  bro = context.createLinearGradient(0,0,400,400);
-  bro.addColorStop(0,"green");
-  bro.addColorStop(0.2,"yellow");
-  bro.addColorStop(0.4,"magenta");
-  bro.addColorStop(0.6,"blue");
-  bro.addColorStop(0.8,"red");
-  bro.addColorStop(1,"pink");
+   // Draw apple and using linear gradient throughout the canvas to give different colors. 
   bre = context.createLinearGradient(0,0,400,400);
   bre.addColorStop(0,"pink");
   bre.addColorStop(0.2,"magenta");
@@ -118,9 +147,19 @@ function loop() {
   context.fillStyle = bre;
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
 
-  context.fillStyle = "black";
-  context.fillText(myScore,170,270);
-  //Draw snake
+ 
+  scorecontext.font = '60px bold comic sans MS';
+  scorecontext.fillStyle = "red";
+  scorecontext.fillText(myScore,35,70);
+
+  //Draw snakeand using linear gradient throughout the canvas to give different colors.
+  bro = context.createLinearGradient(0,0,400,400);
+  bro.addColorStop(0,"green");
+  bro.addColorStop(0.2,"yellow");
+  bro.addColorStop(0.4,"magenta");
+  bro.addColorStop(0.6,"blue");
+  bro.addColorStop(0.8,"red");
+  bro.addColorStop(1,"pink");
   context.fillStyle = bro;
   snake.cells.forEach(function(cell, index)
    {
@@ -199,9 +238,9 @@ function moveright() {
 // start the game
 requestAnimationFrame(loop);
 </script>
-<button style=" position: absolute; left:72%; top:30%;" onmousedown="moveup()"     class="button2" id="up"    ontouchstart="moveup()">UP</button><br><br>
-<button style=" position: absolute; left:60%; top:40%;"onmousedown="moveleft()"   class="button" id="left"  ontouchstart="moveleft()">LEFT</button>
-<button style=" position: absolute; left:70%; top:40%;"onmousedown="movedown()"   class="button" id="down"  ontouchstart="movedown()">DOWN</button>
-<button style=" position: absolute; left:80%; top:40%;"onmousedown="moveright()"  class="button" id="right" ontouchstart="moveright()">RIGHT</button>
+<button style=" position: absolute; left:70%; top:25%;" onmousedown="moveup()"     class="button2" id="up"    ontouchstart="moveup()">UP</button><br><br>
+<button style=" position: absolute; left:60%; top:45%;"onmousedown="moveleft()"   class="button" id="left"  ontouchstart="moveleft()">LEFT</button>
+<button style=" position: absolute; left:70%; top:45%;"onmousedown="movedown()"   class="button" id="down"  ontouchstart="movedown()">DOWN</button>
+<button style=" position: absolute; left:80%; top:45%;"onmousedown="moveright()"  class="button" id="right" ontouchstart="moveright()">RIGHT</button>
 </body>
 </html>

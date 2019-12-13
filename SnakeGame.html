@@ -115,6 +115,7 @@ function loop() {
   }
   count = 0;  
   context.clearRect(0,0,canvas.width,canvas.height);
+  scorecontext.clearRect(0,0,canvas.width,canvas.height);
   snake.x += snake.dx;     //move snake by it's velocity 
   snake.y += snake.dy;
 
@@ -148,7 +149,7 @@ function loop() {
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
 
  
-  scorecontext.font = '60px bold comic sans MS';
+  scorecontext.font = '60px bold veranda';
   scorecontext.fillStyle = "red";
   scorecontext.fillText(myScore,35,70);
 
